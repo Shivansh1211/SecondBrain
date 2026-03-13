@@ -1,4 +1,19 @@
 package com.secondbrain.ai.SecondBrain.entity;
 
-public class Message{
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+
+import java.util.Collection;
+
+@Entity
+public class Message extends BaseEntity {
+    @ManyToOne
+    private ChatSession chatSession;
+
+    private String question;
+
+    @Column(columnDefinition = "TEXT")
+    private String answer;
 }

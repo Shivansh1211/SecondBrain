@@ -5,8 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
-import java.util.Collection;
-
 @Entity
 public class Message extends BaseEntity {
     @ManyToOne

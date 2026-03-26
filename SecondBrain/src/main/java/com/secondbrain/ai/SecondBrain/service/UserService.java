@@ -1,9 +1,9 @@
 package com.secondbrain.ai.SecondBrain.service;
 import com.secondbrain.ai.SecondBrain.dto.user.RegisterRequest;
 import com.secondbrain.ai.SecondBrain.dto.user.UserResponse;
-
-
 import java.util.List;
+
+
 public interface UserService {
     UserResponse register(RegisterRequest request);
     UserResponse findById(Long id);

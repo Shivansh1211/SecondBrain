@@ -71,3 +71,4 @@ public class ChatSessionServiceImpl implements ChatSessionService {
         response.setCreatedAt(session.getCreatedAt());
         return response;
     }
+}

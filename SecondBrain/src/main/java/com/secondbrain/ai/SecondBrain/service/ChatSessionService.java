@@ -12,7 +12,7 @@ public interface ChatSessionService {
 
      ChatSessionResponse findById(Long id);
 
-     List<ChatSessionResponse> findAllByUserIdAndPdfDocumentId(Long pdfDocumentId, Long userId);
+     List<ChatSessionResponse> findAllByUserIdAndPdfDocumentId( Long userId,Long pdfDocumentId);
 
      List<ChatSessionResponse> findAllByUserId(Long userId);
 

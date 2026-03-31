@@ -43,7 +43,7 @@ public class ChatSessionServiceImpl implements ChatSessionService {
     }
 
     @Override
-    public List<ChatSessionResponse> findAllByUserIdAndPdfDocumentId(Long userId, Long pdfDocumentId) {
+    public List<ChatSessionResponse> findAllByUserIdAndPdfDocumentId( Long userId,Long pdfDocumentId) {
         return chatSessionRepository.findAllByUserIdAndPdfDocumentId(userId, pdfDocumentId)
                 .stream()
                 .map(this::mapToResponse)

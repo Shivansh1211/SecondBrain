@@ -9,6 +9,4 @@ public class ChatSessionRequest {
 
   @NotNull(message="document_ID cannot be null")
     private Long pdfDocumentId;
-
-
 }

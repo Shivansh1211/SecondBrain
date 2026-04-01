@@ -13,7 +13,7 @@ public interface MessageService {
 
      List<MessageResponse> findAllByChatSessionId(Long chatSessionId);
 
-     void delete(Long id);
+     MessageResponse delete(Long id);
 
 
 }

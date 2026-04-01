@@ -50,9 +50,10 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void delete(Long id) {
+    public MessageResponse delete(Long id) {
         messageRepository.deleteById(id);
 
+        return null;
     }
     private MessageResponse mapToResponse(Message message)
     {

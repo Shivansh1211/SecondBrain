@@ -30,3 +30,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore environment variables
+.env
+

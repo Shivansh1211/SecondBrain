@@ -6,6 +6,7 @@ import com.secondbrain.ai.SecondBrain.entity.ChatSession;
 import com.secondbrain.ai.SecondBrain.entity.Message;
 import com.secondbrain.ai.SecondBrain.repository.ChatSessionRepository;
 import com.secondbrain.ai.SecondBrain.repository.MessageRepository;
+import com.secondbrain.ai.SecondBrain.service.AiService;
 import com.secondbrain.ai.SecondBrain.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final ChatSessionRepository chatSessionRepository;
+    private final AiService aiService;
 
     @Override
     public MessageResponse askQuestion(MessageRequest request) {
@@ -25,7 +27,8 @@ public class MessageServiceImpl implements MessageService {
         Message message= new Message();
         message.setChatSession(chatSession);
         message.setQuestion(request.getQuestion());
-        message.setAnswer("AI answer will be here");
+        String answer = aiService.getAnswer(request.getQuestion());
+        message.setAnswer(answer);
 
         Message saved=messageRepository.save(message);
         return mapToResponse(saved);

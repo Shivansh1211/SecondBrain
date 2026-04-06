@@ -4,6 +4,7 @@ import com.secondbrain.ai.SecondBrain.dto.pdfdocument.PdfDocumentResponse;
 import com.secondbrain.ai.SecondBrain.dto.pdfdocument.PdfDocumentUploadRequest;
 import com.secondbrain.ai.SecondBrain.entity.PdfDocument;
 import com.secondbrain.ai.SecondBrain.entity.User;
+import com.secondbrain.ai.SecondBrain.exception.ResourceNotFoundException;
 import com.secondbrain.ai.SecondBrain.repository.PdfDocumentRepository;
 import com.secondbrain.ai.SecondBrain.repository.UserRepository;
 import com.secondbrain.ai.SecondBrain.service.PdfDocumentService;
@@ -21,7 +22,7 @@ public class PdfDocumentServiceImpl implements PdfDocumentService {
     @Override
     public PdfDocumentResponse uploadDocument(PdfDocumentUploadRequest request, Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User Not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User Not found"));
 
         PdfDocument document= new PdfDocument();
         document.setFileName(request.getFileName());
@@ -35,7 +36,7 @@ public class PdfDocumentServiceImpl implements PdfDocumentService {
     @Override
     public PdfDocumentResponse findById(Long id) {
         PdfDocument pdfDocument =  pdfDocumentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Document not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found"));
         return mapToResponse(pdfDocument);
     }
 

@@ -5,6 +5,7 @@ import com.secondbrain.ai.SecondBrain.dto.chatsession.ChatSessionResponse;
 import com.secondbrain.ai.SecondBrain.entity.ChatSession;
 import com.secondbrain.ai.SecondBrain.entity.PdfDocument;
 import com.secondbrain.ai.SecondBrain.entity.User;
+import com.secondbrain.ai.SecondBrain.exception.ResourceNotFoundException;
 import com.secondbrain.ai.SecondBrain.repository.ChatSessionRepository;
 import com.secondbrain.ai.SecondBrain.repository.PdfDocumentRepository;
 import com.secondbrain.ai.SecondBrain.repository.UserRepository;
@@ -25,9 +26,9 @@ public class ChatSessionServiceImpl implements ChatSessionService {
     @Override
     public ChatSessionResponse createChatSession(ChatSessionRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User Not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User Not found"));
         PdfDocument pdfDocument = pdfDocumentRepository.findById(request.getPdfDocumentId())
-                .orElseThrow(() -> new RuntimeException("PdfDocument not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("PdfDocument not found"));
         ChatSession chatSession = new ChatSession();
         chatSession.setUser(user);
         chatSession.setPdfDocument(pdfDocument);
@@ -38,7 +39,7 @@ public class ChatSessionServiceImpl implements ChatSessionService {
     @Override
     public ChatSessionResponse findById(Long id) {
         ChatSession chatSession = chatSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Session not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Session not found"));
         return mapToResponse(chatSession);
     }
 

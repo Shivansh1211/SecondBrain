@@ -4,6 +4,7 @@ import com.secondbrain.ai.SecondBrain.dto.message.MessageRequest;
 import com.secondbrain.ai.SecondBrain.dto.message.MessageResponse;
 import com.secondbrain.ai.SecondBrain.entity.ChatSession;
 import com.secondbrain.ai.SecondBrain.entity.Message;
+import com.secondbrain.ai.SecondBrain.exception.ResourceNotFoundException;
 import com.secondbrain.ai.SecondBrain.repository.ChatSessionRepository;
 import com.secondbrain.ai.SecondBrain.repository.MessageRepository;
 import com.secondbrain.ai.SecondBrain.service.AiService;
@@ -38,7 +39,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageResponse findById(Long id) {
         Message message= messageRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Message not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("Message not found"));
              return mapToResponse(message);
 
     }

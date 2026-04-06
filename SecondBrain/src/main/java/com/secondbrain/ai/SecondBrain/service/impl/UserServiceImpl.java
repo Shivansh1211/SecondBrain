@@ -3,6 +3,7 @@ package com.secondbrain.ai.SecondBrain.service.impl;
 import com.secondbrain.ai.SecondBrain.dto.user.RegisterRequest;
 import com.secondbrain.ai.SecondBrain.dto.user.UserResponse;
 import com.secondbrain.ai.SecondBrain.entity.User;
+import com.secondbrain.ai.SecondBrain.exception.ResourceNotFoundException;
 import com.secondbrain.ai.SecondBrain.repository.UserRepository;
 import com.secondbrain.ai.SecondBrain.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse findById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return mapToResponse(user);
     }
 
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse update(Long id, RegisterRequest request) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         return mapToResponse(userRepository.save(user));

@@ -18,4 +18,18 @@ public class AiService {
                 .call()
                 .content();
     }
+
+    public String summarizeDocument(String extractedText) {
+        String prompt = """
+                You are a helpful assistant. Summarize the following document clearly and concisely.
+                Focus on key points, main ideas, and important details.
+                
+                Document:
+                """ + extractedText;
+
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
+    }
 }

@@ -2,11 +2,12 @@ package com.secondbrain.ai.SecondBrain.service;
 
 import com.secondbrain.ai.SecondBrain.dto.pdfdocument.PdfDocumentResponse;
 import com.secondbrain.ai.SecondBrain.dto.pdfdocument.PdfDocumentUploadRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface PdfDocumentService {
-    PdfDocumentResponse uploadDocument(PdfDocumentUploadRequest request, Long userId);
+    PdfDocumentResponse uploadDocument(MultipartFile file, Long userId);
 
     PdfDocumentResponse findById(Long id);
 

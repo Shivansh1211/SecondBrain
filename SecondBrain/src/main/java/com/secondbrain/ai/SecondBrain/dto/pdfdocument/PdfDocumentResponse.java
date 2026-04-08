@@ -9,4 +9,5 @@ public class PdfDocumentResponse {
        private String fileName;
        private String filePath;
        private Long userId;
+       private String summary;
 }

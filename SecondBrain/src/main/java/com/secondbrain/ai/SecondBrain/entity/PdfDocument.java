@@ -13,8 +13,12 @@ import lombok.Setter;
 public class PdfDocument extends BaseEntity{
     @Column(nullable = false)
     private String fileName;
+
     @Column(nullable = false)
     private String filePath;
+
+    @Column(columnDefinition = "TEXT")
+    private String summary;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

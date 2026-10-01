@@ -1,5 +1,7 @@
 package com.secondbrain.ai.SecondBrain.controller;
 
+import com.secondbrain.ai.SecondBrain.dto.user.AuthResponse;
+import com.secondbrain.ai.SecondBrain.dto.user.LoginRequest;
 import com.secondbrain.ai.SecondBrain.dto.user.RegisterRequest;
 import com.secondbrain.ai.SecondBrain.dto.user.UserResponse;
 import com.secondbrain.ai.SecondBrain.service.UserService;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -21,6 +24,12 @@ public class UserController {
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
         UserResponse response = userService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        AuthResponse response = userService.login(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")

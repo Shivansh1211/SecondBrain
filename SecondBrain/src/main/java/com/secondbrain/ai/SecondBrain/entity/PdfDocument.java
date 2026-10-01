@@ -20,6 +20,9 @@ public class PdfDocument extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     private String summary;
 
+    @Column(columnDefinition = "TEXT")
+    private String extractedText;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

@@ -17,57 +17,58 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
+
     private final MessageRepository messageRepository;
     private final ChatSessionRepository chatSessionRepository;
     private final AiService aiService;
 
     @Override
     public MessageResponse askQuestion(MessageRequest request) {
-       ChatSession chatSession= chatSessionRepository.findById(request.getChatSessionId())
-               .orElseThrow(()-> new RuntimeException("Session not found"));
-        Message message= new Message();
+        ChatSession chatSession = chatSessionRepository.findById(request.getChatSessionId())
+                .orElseThrow(() -> new ResourceNotFoundException("Chat session not found with id: " + request.getChatSessionId()));
+
+        String documentText = chatSession.getPdfDocument() != null ? chatSession.getPdfDocument().getExtractedText() : "";
+        String answer = aiService.getAnswer(documentText, request.getQuestion());
+
+        Message message = new Message();
         message.setChatSession(chatSession);
         message.setQuestion(request.getQuestion());
-        String answer = aiService.getAnswer(request.getQuestion());
         message.setAnswer(answer);
 
-        Message saved=messageRepository.save(message);
+        Message saved = messageRepository.save(message);
         return mapToResponse(saved);
-
     }
 
     @Override
     public MessageResponse findById(Long id) {
-        Message message= messageRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Message not found"));
-             return mapToResponse(message);
-
+        Message message = messageRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Message not found with id: " + id));
+        return mapToResponse(message);
     }
 
     @Override
     public List<MessageResponse> findAllByChatSessionId(Long chatSessionId) {
-         return messageRepository.findAllByChatSessionId(chatSessionId)
-                 .stream()
-                 .map(this::mapToResponse)
-                 .toList();
-
+        return messageRepository.findAllByChatSessionId(chatSessionId)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     @Override
     public MessageResponse delete(Long id) {
+        Message message = messageRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Message not found with id: " + id));
         messageRepository.deleteById(id);
-
-        return null;
+        return mapToResponse(message);
     }
-    private MessageResponse mapToResponse(Message message)
-    {
-        MessageResponse  response= new MessageResponse();
+
+    private MessageResponse mapToResponse(Message message) {
+        MessageResponse response = new MessageResponse();
         response.setId(message.getId());
         response.setChatSessionId(message.getChatSession().getId());
         response.setQuestion(message.getQuestion());
         response.setAnswer(message.getAnswer());
         response.setCreatedAt(message.getCreatedAt());
-
         return response;
     }
 }

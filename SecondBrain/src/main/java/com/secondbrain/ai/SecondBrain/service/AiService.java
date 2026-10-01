@@ -12,9 +12,23 @@ public class AiService {
         this.chatClient = chatClientBuilder.build();
     }
 
-    public String getAnswer(String question) {
+    public String getAnswer(String documentContext, String question) {
+        String prompt = """
+                You are SecondBrain, an intelligent assistant. Answer the user's question based strictly on the provided document context below.
+                If the document does not contain relevant information to answer the question, state clearly that the document does not mention it.
+                
+                Document Context:
+                %s
+                
+                User Question:
+                %s
+                """.formatted(
+                documentContext != null ? documentContext : "No document text available.",
+                question
+        );
+
         return chatClient.prompt()
-                .user(question)
+                .user(prompt)
                 .call()
                 .content();
     }
